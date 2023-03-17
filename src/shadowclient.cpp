@@ -2,7 +2,7 @@
 
 ef::shadowclient::shadowclient(int myip,
                                int myport)
-    : ip(myip), port(myport)
+    : ip(myip), port(myport), isdownloading(false), waiting(false)
 {
     fd = socket(AF_INET, SOCK_DGRAM, 0);
     fcntl(0, F_SETFL, O_NONBLOCK);
