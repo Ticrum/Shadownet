@@ -40,5 +40,6 @@ void ef::shadowclient::requestfile(char *file)
         sendto(fd, (char *)&pack, sizeof(pack), 0, (struct sockaddr *)&sockget, (socklen_t)s);
         compt += 1;
     }
+    messagesent.push_back(newreq);
     printf("file %s requested\n", file);
 }

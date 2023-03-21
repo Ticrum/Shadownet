@@ -14,7 +14,7 @@ void ef::shadowclient::inmessage(ef::packet & pack)
         str.append(pack.filename);
         if (currpacket == 0)
         {
-            filefd = open(&str[0], O_CREAT | O_APPEND | O_WRONLY, 0666);
+            filefd = open(&str[0], O_CREAT | O_APPEND | O_WRONLY | O_TRUNC, 0666);
             maxpacket = pack.maxpacket;
         }
         write(filefd, pack.data, pack.datalen);

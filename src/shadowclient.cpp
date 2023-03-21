@@ -12,10 +12,11 @@ ef::shadowclient::shadowclient(int myip,
     mysock.sin_port = (in_port_t)htons(48879);
     mysock.sin_addr = (struct in_addr)ip.full;//INADDR_ANY;
 
+    isdownloading = false;
+    waiting = false;
     sockget = mysock;
     s = sizeof(struct sockaddr);
     bind(fd, (struct sockaddr *)&mysock, (socklen_t)s);
-
 }
 
 
