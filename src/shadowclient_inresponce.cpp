@@ -1,14 +1,15 @@
 #include <shadownet.hh>
 
-static bool notalreadysent(std::vector<ef::request *>   message,
-                           int                          index)
+static bool notalreadysent(std::vector<ef::request *>   & message,
+                           int                          index,
+                           int                          index2)
 {
     int compt;
 
     compt = 0;
     while (compt < (int)message[index]->sendto.size())
     {
-        if ((int)message[index]->sendto[compt]->user.isvalid == 1)
+        if ((int)message[index]->sendto[compt]->user.isvalid == 1 && compt != index2)
             return false;
         compt += 1;
     }
@@ -51,8 +52,9 @@ void ef::shadowclient::inresponce(ef::packet & pack)
     else
     {
         messagesent[index]->sendto[index2]->user.isvalid = 1;
-        if ((pack.iporigin != ip.full || pack.portorigin != port) && notalreadysent(messagesent, index))
+        if ((pack.iporigin != ip.full || pack.portorigin != port) && notalreadysent(messagesent, index, index2))
         {
+            printf("confirm optention file \n");
             sockget.sin_port = (in_port_t)htons(messagesent[index]->from.port);
             sockget.sin_addr = (struct in_addr)messagesent[index]->from.ip.full;
             sendto(fd, (char *)&pack, sizeof(pack), 0, (struct sockaddr *)&sockget, (socklen_t)s);

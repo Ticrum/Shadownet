@@ -28,8 +28,8 @@ void ef::shadowclient::inmessage(ef::packet & pack)
     }
     else
     {
-        sockget.sin_port = (in_port_t)htons(messagesent[index]->sendto[0]->user.port);
-        sockget.sin_addr = (struct in_addr)messagesent[index]->sendto[0]->user.ip.full;
+        sockget.sin_port = (in_port_t)htons(messagesent[index]->from.port);
+        sockget.sin_addr = (struct in_addr)messagesent[index]->from.ip.full;
         sendto(fd, (char *)&pack, sizeof(pack), 0, (struct sockaddr *)&sockget, (socklen_t)s);
     }
 }
