@@ -7,7 +7,7 @@ int ef::shadowclient::find_sendto(std::vector<subrequest *> & sendto,
     int compt;
 
     compt = 0;
-    while (compt < (int)sendto.size() && ((sendto[compt]->user.ip.full == ip && sendto[compt]->user.port == port) == 0))
+    while (compt < (int)sendto.size() && (sendto[compt]->user.ip.full != ip && sendto[compt]->user.port != port))
         compt += 1;
     if (compt == (int)sendto.size())
         return -1;
