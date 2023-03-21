@@ -8,12 +8,14 @@ int main(int    a,
     char data[60];
     char data2[60];
     ef::addrip myip;
+    int myport;
 
-    if (a != 2)
+    if (a != 3)
         return 0;
     chartoip(inputs[1], myip);
-    printf("%d %d.%d.%d.%d\n", myip.full, myip.split[0], myip.split[1], myip.split[2], myip.split[3]);
-    ef::shadowclient client(myip.full, 48879);
+    myport = atoi(inputs[2]);
+    printf("%d %d.%d.%d.%d port %d\n", myip.full, myip.split[0], myip.split[1], myip.split[2], myip.split[3], myport);
+    ef::shadowclient client(myip.full, myport);//48879
 
     command[0] = '\0';
     data[0] = '\0';

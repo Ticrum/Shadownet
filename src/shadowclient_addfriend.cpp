@@ -14,7 +14,7 @@ void ef::shadowclient::addfriend(char *ip,
     }
     newcontact = new contact;
     chartoip(ip, newcontact->ip);
-    newcontact->port = atoi(port);
+    newcontact->port = htons(atoi(port));
     newcontact->isvalid = 1;
     friends.push_back(newcontact);
     printf("friend %s %s added\n", ip, port);

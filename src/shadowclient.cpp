@@ -9,7 +9,7 @@ ef::shadowclient::shadowclient(int myip,
     fds[0].fd = fd;
     fds[0].events = POLLOUT | POLLIN;
     mysock.sin_family = AF_INET;
-    mysock.sin_port = (in_port_t)htons(48879);
+    mysock.sin_port = (in_port_t)myport;
     mysock.sin_addr = (struct in_addr)ip.full;//INADDR_ANY;
 
     isdownloading = false;

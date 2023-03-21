@@ -15,13 +15,15 @@ static bool notalreadysent(std::vector<ef::request *>   message,
     return true;
 }
 
-static bool hasfinish(std::vector<ef::subrequest *> sub)
+static bool hasfinish(std::vector<ef::subrequest *> & sub)
 {
     int compt;
 
     compt = 0;
+    printf("verif for end\n");
     while (compt < (int)sub.size())
     {
+        printf("verif isvalid %d\n", sub[compt]->user.isvalid);
         if (sub[compt]->user.isvalid == 0)
             return false;
         compt += 1;
@@ -35,12 +37,15 @@ void ef::shadowclient::inresponce(ef::packet & pack)
     int index2;
     request *req;
 
+    printf("enter\n");
     index = find_messagesent(pack.filename, 1);
     if (index == -1)
         return;
-    index2 = find_sendto(messagesent[index]->sendto, *(uint32_t *)&sockget.sin_addr, (uint16_t)sockget.sin_port);
+    printf("pass message\n");
+    index2 = find_sendto(messagesent[index]->sendto, *(uint32_t *)&sockget.sin_addr, (uint16_t)ntohs(sockget.sin_port));
     if (index2 == -1)
         return;
+    printf("pass sendto i %d i2 %d\n", index, index2);
     if (pack.nbrpacket == 0)
         messagesent[index]->sendto[index2]->user.isvalid = 2;
     else

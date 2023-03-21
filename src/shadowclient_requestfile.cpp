@@ -11,6 +11,7 @@ void ef::shadowclient::requestfile(char *file)
     index = find_messagesent(file, 1);
     if (index != -1)
     {
+        printf("%ld\n", messagesent.size());
         printf("request for %s already sent\n", file);
         return;
     }
