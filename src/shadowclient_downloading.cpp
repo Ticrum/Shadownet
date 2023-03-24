@@ -39,7 +39,7 @@ void ef::shadowclient::downloading(void)
     if (curfileinfo->compt == (int)curfileinfo->hasfile.size())
         curfileinfo->compt = 0;
     compt = 0;
-    while (curfileinfo->hasfile[curfileinfo->compt]->isvalid == 0 && compt < (int)curfileinfo->hasfile.size())
+    while (curfileinfo->hasfile[curfileinfo->compt]->isvalid == 2 && compt < (int)curfileinfo->hasfile.size())
     {
         curfileinfo->compt += 1;
         if (curfileinfo->compt == (int)curfileinfo->hasfile.size())

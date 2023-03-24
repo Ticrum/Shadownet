@@ -85,9 +85,11 @@ namespace ef
 
         void requestfile(char *file);
 
-        void download(char *file);
+        void download(char *file, bool resume);
 
         void downloading(void);
+
+        void timeout(void);
 
         void incall(packet & pack);
 

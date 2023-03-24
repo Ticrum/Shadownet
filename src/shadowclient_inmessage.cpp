@@ -4,6 +4,7 @@ void ef::shadowclient::inmessage(ef::packet & pack)
 {
     int index;
     std::string str;
+    request *req;
 
     index = find_messagesent(pack.filename, 2);
     if (index == -1)
@@ -22,6 +23,7 @@ void ef::shadowclient::inmessage(ef::packet & pack)
         currpacket += 1;
         if (currpacket >= maxpacket)
         {
+            printf("%s has finish downloading\n", filename);
             isdownloading = false;
             close(filefd);
         }
@@ -32,4 +34,8 @@ void ef::shadowclient::inmessage(ef::packet & pack)
         sockget.sin_addr = (struct in_addr)messagesent[index]->from.ip.full;
         sendto(fd, (char *)&pack, sizeof(pack), 0, (struct sockaddr *)&sockget, (socklen_t)s);
     }
+    req = messagesent[index];
+    messagesent[index] = messagesent.back();
+    messagesent.back() = req;
+    messagesent.pop_back();
 }

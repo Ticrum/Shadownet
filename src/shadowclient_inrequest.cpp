@@ -51,7 +51,7 @@ void ef::shadowclient::inrequest(ef::packet & pack)
                   (friends[compt[0]]->ip.full == (uint32_t)ne->from.ip.full &&  friends[compt[0]]->port == *(uint16_t *) &mysock))
                 compt[0] ++;
             nesub = new subrequest;
-            nesub->time = 0;
+            nesub->time = time(NULL);
             nesub->user.ip.full = friends[compt[0]]->ip.full;
             nesub->user.port = friends[compt[0]]->port;
             nesub->user.isvalid = 0;

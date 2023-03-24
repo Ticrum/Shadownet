@@ -58,6 +58,7 @@ void ef::shadowclient::incall(ef::packet & pack)
     packet newpack;
     request *req;
     subrequest *sub;
+    int compt;
 
     index = find_myfile(pack.filename);
     if (index != -1)
@@ -85,6 +86,17 @@ void ef::shadowclient::incall(ef::packet & pack)
 
         sockget.sin_port = (in_port_t)htons(knownfile[index]->hasfile[knownfile[index]->compt]->port);
         sockget.sin_addr = (struct in_addr)knownfile[index]->hasfile[knownfile[index]->compt]->ip.full;
+        knownfile[index]->compt += 1;
+        if (knownfile[index]->compt == (int)knownfile[index]->hasfile.size())
+            knownfile[index]->compt = 0;
+        compt = 0;
+        while (knownfile[index]->hasfile[knownfile[index]->compt]->isvalid == 0 && compt < (int)knownfile[index]->hasfile.size())
+        {
+            knownfile[index]->compt += 1;
+            if (knownfile[index]->compt == (int)knownfile[index]->hasfile.size())
+                knownfile[index]->compt = 0;
+            compt += 1;
+        }
         sendto(fd, (char *)&pack, sizeof(pack), 0, (struct sockaddr *)&sockget, (socklen_t)s);
     }
 }
