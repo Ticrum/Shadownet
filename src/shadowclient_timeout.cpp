@@ -15,7 +15,7 @@ void ef::shadowclient::timeout(void)
         if (messagesent[compt]->type == 2)
         {
             //printf("enter verif\n");
-            if (messagesent[compt]->sendto[0]->time + 3 <= time(NULL))
+            if (messagesent[compt]->sendto[0]->time + 5 <= time(NULL))
             {
                 printf("timeout %ld %d!!\n", time(NULL), messagesent[compt]->sendto[0]->time);
                 index = find_knownfile(messagesent[compt]->filename);

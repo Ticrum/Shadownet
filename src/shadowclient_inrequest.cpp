@@ -47,8 +47,9 @@ void ef::shadowclient::inrequest(ef::packet & pack)
     ne = new_request(sockget, pack.iporigin, pack.portorigin, pack.filename);
     while (compt[0] < compt[1])
         {
-            while(friends[compt[0]]->isvalid != 1 ||
-                  (friends[compt[0]]->ip.full == (uint32_t)ne->from.ip.full &&  friends[compt[0]]->port == ne->from.port))
+            printf("pute\n");
+            while(compt[0] < compt[1] && (friends[compt[0]]->isvalid != 1 ||
+                                          (friends[compt[0]]->ip.full == (uint32_t)ne->from.ip.full &&  friends[compt[0]]->port == ne->from.port)))
                 compt[0] ++;
             if (compt[0] < compt[1])
             {
