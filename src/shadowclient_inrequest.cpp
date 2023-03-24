@@ -8,7 +8,7 @@ static ef::request *new_request(struct sockaddr_in & soget,
     ef::request *ne;
 
     ne = new(ef::request);
-    ne->from.ip.full = * (uint32_t*)&soget.sin_addr;
+    ne->from.ip.full = *(uint32_t*)&soget.sin_addr;
     ne->from.port = (uint16_t)ntohs(soget.sin_port);
     ne->from.isvalid = 0;
     ne->origin.ip.full = cimp;
@@ -45,21 +45,24 @@ void ef::shadowclient::inrequest(ef::packet & pack)
     compt[1] = friends.size();
     compt[0] = 0;
     ne = new_request(sockget, pack.iporigin, pack.portorigin, pack.filename);
-    while (compt[0] != compt[1])
+    while (compt[0] < compt[1])
         {
             while(friends[compt[0]]->isvalid != 1 ||
-                  (friends[compt[0]]->ip.full == (uint32_t)ne->from.ip.full &&  friends[compt[0]]->port == *(uint16_t *) &mysock))
+                  (friends[compt[0]]->ip.full == (uint32_t)ne->from.ip.full &&  friends[compt[0]]->port == ne->from.port))
                 compt[0] ++;
-            nesub = new subrequest;
-            nesub->time = time(NULL);
-            nesub->user.ip.full = friends[compt[0]]->ip.full;
-            nesub->user.port = friends[compt[0]]->port;
-            nesub->user.isvalid = 0;
-            ne->sendto.push_back(nesub);
-            sockget.sin_port = (in_port_t)htons(friends[compt[0]]->port);
-            sockget.sin_addr = (struct in_addr) friends[compt[0]]->ip.full;
-            sendto(fd, (char *)&pack, sizeof(pack), 0, (struct sockaddr *)&sockget, (socklen_t)s);
-            compt[0] ++;
+            if (compt[0] < compt[1])
+            {
+                nesub = new subrequest;
+                nesub->time = time(NULL);
+                nesub->user.ip.full = friends[compt[0]]->ip.full;
+                nesub->user.port = friends[compt[0]]->port;
+                nesub->user.isvalid = 0;
+                ne->sendto.push_back(nesub);
+                sockget.sin_port = (in_port_t)htons(friends[compt[0]]->port);
+                sockget.sin_addr = (struct in_addr) friends[compt[0]]->ip.full;
+                sendto(fd, (char *)&pack, sizeof(pack), 0, (struct sockaddr *)&sockget, (socklen_t)s);
+                compt[0] ++;
+            }
         }
     messagesent.push_back(ne);
 }

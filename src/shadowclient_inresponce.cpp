@@ -21,10 +21,10 @@ static bool hasfinish(std::vector<ef::subrequest *> & sub)
     int compt;
 
     compt = 0;
-    //printf("verif for end\n");
+    printf("verif for end\n");
     while (compt < (int)sub.size())
     {
-        //printf("verif isvalid %d\n", sub[compt]->user.isvalid);
+        printf("verif isvalid %d\n", sub[compt]->user.isvalid);
         if (sub[compt]->user.isvalid == 0)
             return false;
         compt += 1;
